@@ -36,7 +36,7 @@ class NumpyDataset(data.Dataset):
     def __getitem__(self, index):
         return self.array[index]
 
-n_train, n_test = 2000, 1000
+n_train, n_test = 20000, 10000
 train_data = metropolis_algorithm(f, 1, n_train, 100)
 test_data = metropolis_algorithm(f, 1, n_test, 100)
 
