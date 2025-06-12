@@ -15,7 +15,7 @@ def metropolis_algorithm(f, initial_state, num_samples, burn_in):
     return chain[burn_in:]
 
 def f(x):
-    return np.exp(-x**2)  # Example: Gaussian distribution
+    return 1 / (1 + x**2)  # Example: Gaussian distribution
 
 
 def generate_mixture_of_gaussians(num_of_points):
