@@ -35,9 +35,9 @@ class NumpyDataset(data.Dataset):
     def __getitem__(self, index):
         return self.array[index]
 
-n_train, n_test = 2000, 1000
-train_data = metropolis_algorithm(f, 1, n_train, 100)
-test_data = metropolis_algorithm(f, 1, n_test, 100)
+n_train, n_test = 20000, 10000
+train_data = metropolis_algorithm(f, 1, n_train, 1000)
+test_data = metropolis_algorithm(f, 1, n_test, 1000)
 
 train_loader = data.DataLoader(NumpyDataset(train_data), batch_size=128, shuffle=True)
 test_loader = data.DataLoader(NumpyDataset(test_data), batch_size=128, shuffle=True)
