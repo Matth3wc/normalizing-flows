@@ -2,6 +2,22 @@ import torch
 import torch.utils.data as data 
 import numpy as np
 
+
+def metropolis_algorithm(f, initial_state, num_samples, burn_in):
+    chain = []
+    current_state = initial_state
+    for _ in range(num_samples + burn_in):
+        proposed_state = np.random.uniform(-2, 2)
+        acceptance_ratio = min(1, f(proposed_state) / f(current_state))
+        if np.random.rand() < acceptance_ratio:
+            current_state = proposed_state
+        chain.append(current_state)
+    return chain[burn_in:]
+
+def f(x):
+    return np.exp(-x**2)  # Example: Gaussian distribution
+
+
 def generate_mixture_of_gaussians(num_of_points):
     n = num_of_points // 3
     gaussian1 = np.random.normal(loc=-1, scale=0.25, size=(n,))
@@ -21,8 +37,8 @@ class NumpyDataset(data.Dataset):
         return self.array[index]
 
 n_train, n_test = 2000, 1000
-train_data = generate_mixture_of_gaussians(n_train)
-test_data = generate_mixture_of_gaussians(n_test)
+train_data = metropolis_algorithm(f, 1, n_train, 100)
+test_data = metropolis_algorithm(f, 1, n_test, 100)
 
 train_loader = data.DataLoader(NumpyDataset(train_data), batch_size=128, shuffle=True)
 test_loader = data.DataLoader(NumpyDataset(test_data), batch_size=128, shuffle=True)
