@@ -7,7 +7,7 @@ def metropolis_algorithm(f, initial_state, num_samples, burn_in):
     chain = []
     current_state = initial_state
     for _ in range(num_samples + burn_in):
-        proposed_state = np.random.uniform(-8, 8)
+        proposed_state = np.random.uniform(-6, 6)
         acceptance_ratio = min(1, f(proposed_state) / f(current_state))
         if np.random.rand() < acceptance_ratio:
             current_state = proposed_state
