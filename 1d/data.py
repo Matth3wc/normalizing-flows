@@ -7,7 +7,7 @@ def metropolis_algorithm(f, initial_state, num_samples, burn_in):
     chain = []
     current_state = initial_state
     for _ in range(num_samples + burn_in):
-        proposed_state = np.random.uniform(-2, 2)
+        proposed_state = np.random.uniform(-6, 6)
         acceptance_ratio = min(1, f(proposed_state) / f(current_state))
         if np.random.rand() < acceptance_ratio:
             current_state = proposed_state
@@ -15,7 +15,7 @@ def metropolis_algorithm(f, initial_state, num_samples, burn_in):
     return chain[burn_in:]
 
 def f(x):
-    return np.exp(-5*x**2)  # Example: Gaussian distribution
+    return 1 / (1 + x**2)  # Example: Gaussian distribution
 
 
 def generate_mixture_of_gaussians(num_of_points):
@@ -35,9 +35,9 @@ class NumpyDataset(data.Dataset):
     def __getitem__(self, index):
         return self.array[index]
 
-n_train, n_test = 20000, 10000
-train_data = metropolis_algorithm(f, 1, n_train, 1000)
-test_data = metropolis_algorithm(f, 1, n_test, 1000)
+n_train, n_test = 50000, 40000
+train_data = metropolis_algorithm(f, 1, n_train, 2000)
+test_data = metropolis_algorithm(f, 1, n_test, 2000)
 
 train_loader = data.DataLoader(NumpyDataset(train_data), batch_size=128, shuffle=True)
 test_loader = data.DataLoader(NumpyDataset(test_data), batch_size=128, shuffle=True)
