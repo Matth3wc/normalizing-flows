@@ -42,7 +42,7 @@ train_data = metropolis_algorithm(f, 1, n_train, 2000)
 test_data = metropolis_algorithm(f, 1, n_test, 2000)
 # Save to file
 with open('my_array.pkl', 'wb') as h:
-    pickle.dump(test_data, h)
+    pickle.dump(train_data, h)
 
 train_loader = data.DataLoader(NumpyDataset(train_data), batch_size=128, shuffle=True)
 test_loader = data.DataLoader(NumpyDataset(test_data), batch_size=128, shuffle=True)
