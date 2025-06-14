@@ -1,6 +1,8 @@
 import torch
 import torch.utils.data as data 
 import numpy as np
+import pickle
+
 
 
 def metropolis_algorithm(f, initial_state, num_samples, burn_in):
@@ -38,6 +40,9 @@ class NumpyDataset(data.Dataset):
 n_train, n_test = 50000, 40000
 train_data = metropolis_algorithm(f, 1, n_train, 2000)
 test_data = metropolis_algorithm(f, 1, n_test, 2000)
+# Save to file
+with open('my_array.pkl', 'wb') as h:
+    pickle.dump(test_data, h)
 
 train_loader = data.DataLoader(NumpyDataset(train_data), batch_size=128, shuffle=True)
 test_loader = data.DataLoader(NumpyDataset(test_data), batch_size=128, shuffle=True)
